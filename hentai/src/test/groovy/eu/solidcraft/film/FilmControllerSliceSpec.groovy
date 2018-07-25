@@ -42,7 +42,7 @@ class FilmControllerSliceSpec extends Specification implements SampleFilms {
     def "asking for non existing film should return 404"() {
         given: "there is no film with the title I want"
             String nonExistingTitle = "NonExisitngTitle"
-            filmFacade.show(nonExistingTitle) >> { throw new FilmNotFoundException(nonExistingTitle) }
+            filmFacade.show(nonExistingTitle) >> Optional.empty()
 
         expect: "I get 404 and a message"
             mockMvc.perform(get("/film/$nonExistingTitle"))
@@ -77,7 +77,7 @@ class FilmControllerSliceSpec extends Specification implements SampleFilms {
     @WithMockUser
     def "should get film"() {
         given: 'inventory has an old film "American Clingon Bondage" and a new release of "50 shades of Trumpet"'
-            filmFacade.show(clingon.title) >> clingon
+            filmFacade.show(clingon.title) >> Optional.of(clingon)
 
         when: 'I go to /film'
             ResultActions getFilm = mockMvc.perform(get("/film/$clingon.title"))

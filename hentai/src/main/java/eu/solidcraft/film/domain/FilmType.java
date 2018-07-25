@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 enum FilmType {
     NEW(40), REGULAR(30), OLD(30);
 
-    private BigDecimal price;
+    final BigDecimal price;
 
     FilmType(long price) {
         this(BigDecimal.valueOf(price));

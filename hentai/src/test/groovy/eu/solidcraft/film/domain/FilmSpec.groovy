@@ -19,7 +19,7 @@ class FilmSpec extends Specification implements SampleFilms {
             facade.add(trumper)
 
         then: "system has this film"
-            facade.show(trumper.title) == trumper
+            facade.show(trumper.title).get() == trumper
     }
 
     def "shoud list films"() {

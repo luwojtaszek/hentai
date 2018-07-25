@@ -1,27 +1,26 @@
 package eu.solidcraft.film.domain;
 
+import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static java.util.Objects.requireNonNull;
-
 class InMemoryFilmRepository implements FilmRepository {
-    private ConcurrentHashMap<String, Film> map = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Film> map = new ConcurrentHashMap<>();
 
     @Override
-    public Film save(Film film) {
-        requireNonNull(film);
+    public Film save(@NonNull Film film) {
         map.put(film.dto().getTitle(), film);
         return film;
     }
 
     @Override
-    public Film findOne(String title) {
-        return map.get(title);
+    public Optional<Film> findOne(String title) {
+        return Optional.ofNullable(map.get(title));
     }
 
     @Override
